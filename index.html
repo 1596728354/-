@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>可克拉大桥养护平台</title>
+    <style>canvas { width: 100%; height: 100% }</style>
+    <script src="js/three.js"></script>
+</head>
+<body>
+<script>
+    //场景创建：
+    var scene = new THREE.Scene();
+    //相机创建：
+    var camera = new THREE.PerspectiveCamera(75, 2*window.innerWidth/window.innerHeight, 0.1, 1000);
+    //渲染器创建：
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight/2);
+    document.body.appendChild(renderer.domElement);
+    //建立模型：
+    var geometry1 = new THREE.CubeGeometry(1,1,1);
+    var geometry2 = new THREE.CubeGeometry(1,1,1);
+    var geometry3 = new THREE.CubeGeometry(1,1,1);
+    var geometry4 = new THREE.CubeGeometry(1,1,1);
+    var geometry5 = new THREE.CubeGeometry(1,1,1);
+    var material1 = new THREE.MeshBasicMaterial({color: "#FF0000"});
+    var material2 = new THREE.MeshBasicMaterial({color: "#FFA500"});
+    var material3 = new THREE.MeshBasicMaterial({color: "#FFFF00"});
+    var material4 = new THREE.MeshBasicMaterial({color: "#008000"});
+    var material5 = new THREE.MeshBasicMaterial({color: "#0000FF"});
+    var cube1 = new THREE.Mesh(geometry1, material1);
+    var cube2 = new THREE.Mesh(geometry2, material2);
+    var cube3 = new THREE.Mesh(geometry3, material3);
+    var cube4 = new THREE.Mesh(geometry4, material4);
+    var cube5 = new THREE.Mesh(geometry5, material5);
+    //调整模型位置：
+    cube1.position.x = -3;
+    cube2.position.x = -2;
+    cube3.position.x = -1;
+    cube4.position.x = 0;
+    cube5.position.x = 1;
+    //在场景中加载模型：
+    scene.add(cube1);
+    scene.add(cube2);
+    scene.add(cube3);
+    scene.add(cube4);
+    scene.add(cube5);
+    //相机位置调整：
+    camera.position.z = 5;
+    //设置模型动作：
+    function render() {
+    //添加模型循环变换：
+        requestAnimationFrame(render);
+        cube1.rotation.x += 0.01;
+        //cube1.rotation.y += 0.01;
+        cube2.rotation.x += -0.01;
+        //cube2.rotation.z += 0.01;
+        cube3.rotation.x += 0.01;
+        cube4.rotation.x += -0.01;
+        cube5.rotation.x += 0.01;
+        //物体变色1：
+        var txtHealth = document.getElementById("txtHealth").value;
+        if(txtHealth < 20 && txtHealth >= 0){
+            cube1.material = new THREE.MeshBasicMaterial({color: "#800080"});
+        }
+        else if (txtHealth >= 20 && txtHealth < 40){
+            cube1.material = new THREE.MeshBasicMaterial({color: "#0000FF"});
+        }
+        else if (txtHealth >= 40 && txtHealth < 60){
+            cube1.material = new THREE.MeshBasicMaterial({color: "#008000"});
+        }
+        else if (txtHealth >= 60 && txtHealth < 80){
+            cube1.material = new THREE.MeshBasicMaterial({color: "#FFFF00"});
+        }
+        else if (txtHealth >= 80 && txtHealth <= 100){
+            cube1.material = new THREE.MeshBasicMaterial({color: "#FF0000"});
+        }
+        //物体变色2：
+        var txtHealth2 = document.getElementById("txtHealth2").value;
+        if(txtHealth2 < 20 && txtHealth2 >= 0){
+            cube2.material = new THREE.MeshBasicMaterial({color: "#800080"});
+        }
+        else if (txtHealth2 >= 20 && txtHealth2 < 40){
+            cube2.material = new THREE.MeshBasicMaterial({color: "#0000FF"});
+        }
+        else if (txtHealth2 >= 40 && txtHealth2 < 60){
+            cube2.material = new THREE.MeshBasicMaterial({color: "#008000"});
+        }
+        else if (txtHealth2 >= 60 && txtHealth2 < 80){
+            cube2.material = new THREE.MeshBasicMaterial({color: "#FFFF00"});
+        }
+        else if (txtHealth2 >= 80 && txtHealth2 <= 100){
+            cube2.material = new THREE.MeshBasicMaterial({color: "#FF0000"});
+        }
+    //使用相机将场景在渲染器中渲染：
+        renderer.render(scene, camera);
+    }
+    render();
+</script>
+<div>
+    健康状况:<input type="text" value="45" id="txtHealth"/>(0到100的值)<br>
+    健康状况:<input type="text" value="45" id="txtHealth2"/>(0到100的值)
+</div>
+</body>
+</html>
